@@ -5,6 +5,7 @@ from timeit import default_timer as timer
 
 from gen_dummy_data import gen_dummy_data
 from controllers.NanoController import NanoController
+from controllers.PostgresController import PostgresController
 
 
 def run_with_parameters(controllers, n_tests):
@@ -72,5 +73,14 @@ if __name__ == "__main__":
 
 	if "nanodb" in turned_on:
 		controllers.append(NanoController("http://127.0.0.1:3000"))
+
+	if "postgres" in turned_on:
+		controllers.append(PostgresController(
+			config["POSTGRES_USER"],
+			config["POSTGRES_PASSWORD"],
+			config["POSTGRES_HOST"],
+			config["POSTGRES_PORT"],
+			config["POSTGRES_DB"]
+		))
 
 	run_with_parameters(controllers, n_tests)
