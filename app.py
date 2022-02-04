@@ -81,9 +81,19 @@ if __name__ == "__main__":
 				config["POSTGRES_PASSWORD"],
 				config["POSTGRES_HOST"],
 				config["POSTGRES_PORT"],
-				config["POSTGRES_DB"]
+				config["POSTGRES_DB"],
 			))
 		except ImportError:
 			print("psycopg2 is not installed, skipping PostgreSQL benchmarking")
+
+	if "mongo" in turned_on:
+		try:
+			from controllers.MongoController import MongoController
+			controllers.append(MongoController(
+				config["MONGO_HOST"],
+				config["MONGO_PORT"],
+			))
+		except ImportError:
+			print("pymongo is not installed, skipping MongoDB benchmarking")
 
 	run_with_parameters(controllers, n_tests)
