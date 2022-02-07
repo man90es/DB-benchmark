@@ -69,6 +69,29 @@ if __name__ == "__main__":
 	turned_on = config["DATABASES"].lower().split(",")
 	n_tests = int(config["N_TESTS"])
 
+	if "mongo" in turned_on:
+		try:
+			from controllers.MongoController import MongoController
+			controllers.append(MongoController(
+				config["MONGO_HOST"],
+				config["MONGO_PORT"],
+			))
+		except ImportError:
+			print("pymongo is not installed, skipping MongoDB benchmarking")
+
+	if "mysql" in turned_on:
+		try:
+			from controllers.MySQLController import MySQLController
+			controllers.append(MySQLController(
+				config["MYSQL_USER"],
+				config["MYSQL_PASSWORD"],
+				config["MYSQL_HOST"],
+				config["MYSQL_PORT"],
+				config["MYSQL_DB"],
+			))
+		except ImportError:
+			print("mysql-connector-python is not installed, skipping MySQL benchmarking")
+
 	if "nanodb" in turned_on:
 		from controllers.NanoController import NanoController
 		controllers.append(NanoController("http://127.0.0.1:3000"))
@@ -85,15 +108,5 @@ if __name__ == "__main__":
 			))
 		except ImportError:
 			print("psycopg2 is not installed, skipping PostgreSQL benchmarking")
-
-	if "mongo" in turned_on:
-		try:
-			from controllers.MongoController import MongoController
-			controllers.append(MongoController(
-				config["MONGO_HOST"],
-				config["MONGO_PORT"],
-			))
-		except ImportError:
-			print("pymongo is not installed, skipping MongoDB benchmarking")
 
 	run_with_parameters(controllers, n_tests)

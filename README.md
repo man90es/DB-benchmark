@@ -3,12 +3,12 @@ This is my personal tool for benchmarking various database engines. It assesses 
 
 ## My results
 These are the results that I got for 10k executions on my hardware:
-|            | NanoDB | PostgreSQL | MongoDB |
-| ---------- | ------ | ---------- | ------- |
-| **Create** | 1.58ms | 2.77ms     | 0.17ms  |
-| **Read**   | 1.53ms | 0.05ms     | 0.21ms  |
-| **Update** | 1.57ms | 2.82ms     | 0.21ms  |
-| **Delete** | 1.54ms | 2.86ms     | 0.20ms  |
+|            | MongoDB | MySQL   | NanoDB | PostgreSQL |
+| ---------- | ------- | ------- | ------ | ---------- |
+| **Create** | 0.17ms  | 10.62ms | 1.58ms | 2.77ms     |
+| **Read**   | 0.21ms  | 0.08ms  | 1.53ms | 0.05ms     |
+| **Update** | 0.21ms  | 10.60ms | 1.57ms | 2.82ms     |
+| **Delete** | 0.20ms  | 11.15ms | 1.54ms | 2.86ms     |
 
 System specifications:
 | Variable | Specification  |
@@ -26,8 +26,9 @@ System specifications:
 * Copy the `.env.template` file into `.env` and edit the defined variables to match your configuration;
 * Run `./app.py` to start the benchmarking process.
 
-| Database engine | Required libraries | Additional steps                                  |
-| --------------- | ------------------ | ------------------------------------------------- |
-| NanoDB          | --                 | --                                                |
-| PostgreSQL      | psycopg2           | Create a database and user for the app to utilise |
-| MongoDB         | pymongo            | --                                                |
+| Database engine | Required libraries     | Additional steps                                  |
+| --------------- | ---------------------- | ------------------------------------------------- |
+| MongoDB         | pymongo                | --                                                |
+| MySQL           | mysql-connector-python | Create a database and user for the app to utilise |
+| NanoDB          | --                     | --                                                |
+| PostgreSQL      | psycopg2               | Create a database and user for the app to utilise |
